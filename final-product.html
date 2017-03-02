@@ -65,7 +65,7 @@
                 peopleList.appendChild(filmHeader)
                 var filmList = document.createElement('ol');
                 filmHeader.appendChild(filmList);
-                //loop through starship array make new request for each starship
+               
                 for (var e = 0; e < response.results[y].films.length; e++) {
                   (function(x) {
                     var newURLhost = response.results[y].films[x];

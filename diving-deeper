@@ -1,0 +1,105 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="swapiBasics.css">
+</head>
+<body>
+    <div class="title"><img src="trooperheadblack.png">
+        <h1>
+        Diving deeper
+        </h1>
+        <h4><ul>
+            <li>Nesting for loops to access sub-arrays</li>
+            <li>Making new SWAPI calls</li>
+            </ul>
+        </h4>
+    </div>
+   
+    <div class="text">
+        <p>As we saw in the beginning of this tutorial, people objects contain arrays within them that hold other data. We will focus on the starships array before expanding further toward our final product.</p>
+        <p>For example, the starships array for Luke Skywalker looks like this: </p>
+        <pre>
+        
+       "starships": [
+          "http://swapi.co/api/starships/12/",
+          "http://swapi.co/api/starships/22/"
+      ],
+        </pre>
+        <p>In order to access this subarray, we need need to make a new for loop. Rather than looping through the name attribute of each people page, and making a call to each page that had a query match. The new for loop will loop through the starships array, making calls to each starships page in our people objects.</p>
+        
+        <h2>Making new SWAPI calls</h2>
+        <p>First we need to check if our characters has piloted any ships. This if statement checks if the 'starships' attribute is empty or not. If there are starships, it creates a h6 element with 'starships' as its text content. This will be the new header for our starships list. This header is appended to the bottom of the corresponding person and a starship list is appended to the new starship header.</p>
+        
+        <pre>
+        
+        if (response.results[y].starships.length > 0) {
+                var starshipHeader = document.createElement('h6');
+                starshipHeader.textContent = 'starships:';
+                peopleList.appendChild(starshipHeader)
+                var starshipList = document.createElement('ol');
+                starshipHeader.appendChild(starshipList);
+                .
+                .
+                .
+        </pre>
+        
+        <p>If this if statement is true, it will run the following for loop. The if statement along with the new for loop, gets added right below where we added the query matching names to the document body. </p>
+            <p>Like this:</p>
+        <pre>
+        
+        for (var k = 0; k < response.results.length; k++) {
+            (function(y) { 
+              var people = document.createElement('li');
+              people.textContent = response.results[y].name;
+              peopleList.appendChild(people);
+
+
+            if (response.results[y].starships.length > 0) {
+                var starshipHeader = document.createElement('h6');
+                starshipHeader.textContent = 'starships:';
+                peopleList.appendChild(starshipHeader)
+                var starshipList = document.createElement('ol');
+                starshipHeader.appendChild(starshipList);
+                //loop through starship array make new request for each starship
+                for (var e = 0; e < response.results[y].starships.length; e++) {
+                  (function(x) {
+                    var newURLhost = response.results[y].starships[x];
+                    var newReq = new XMLHttpRequest();
+                    newReq.open('GET', newURLhost, true);
+                    newReq.addEventListener('load', function(){
+                    if(newReq.status >= 200 && newReq.status < 400){
+                      var newResponse = JSON.parse(newReq.responseText);
+                      var starship = document.createElement('li');
+                      starship.textContent = newResponse.name;
+                      starshipList.appendChild(starship);
+                    } else {
+                      console.log("Error in network request: " + newReq.statusText);
+                    }});
+                    newReq.send(null);
+                    event.preventDefault();
+                  })(e);
+                }
+              }
+            starshipHeader.appendChild(starshipList);
+            })(k);
+          }
+
+        } else {
+          console.log('Error in network request: ' + req.statusText);
+        }
+      });
+      req.send(null);
+      event.preventDefault();
+    
+}
+        </pre>
+        
+        <p class="lastline">Lets tie it all together!</p>
+    </div>
+    
+         <p class ="buttons"><a class="button" href="display-data.html" role="button">BACK</a>
+         <a class="button" href="final-product.html" role="button">NEXT</a></p>
+    
+</body>

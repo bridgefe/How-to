@@ -1,0 +1,82 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="swapiBasics.css">
+</head>
+<body>
+    <div class="title"><img src="trooperheadblack.png">
+        <h1>
+        Visualizing the data
+        </h1>
+        <h4><ul>
+            <li>Utilizing the DOM</li>
+            <li>Displaying the data</li>
+            </ul>
+        </h4>
+    </div>
+   
+    <div class="text">
+        <p>Here is the current form of our search request to the SWAPI
+        <br> The call is formed inside of a function that is called when the DOM is loaded.</p>
+        <pre>
+        
+        document.addEventListener('DOMContentLoaded', loadPeople);
+
+        function loadPeople() {
+            var docBod = document.body;
+            var req = new XMLHttpRequest();
+            var URLhost = 'https://swapi.co/api/people/?search=skywalker';
+            req.open('GET', URLhost, true);
+            req.addEventListener('load', function() {
+                if (req.status >= 200 && req.status < 400) {
+                    var response = JSON.parse(req.responseText);
+                    .
+                    .
+                    .
+        </pre>
+        <p>We first create a load function and a variable. We use docBod to easily access and append items to the documents body. Be careful of closure when dealing with for loops in javascript. We have to create a closure for our function so that it logs the correct values through each loop. The request is opened in the same fasion as previously shown, with '?search=skywalker' at the end of the baseURL. Next the response is loaded and parsed.</p>
+        
+        <h2>Appending to the DOM</h2>
+        <p>In order to see the data printed to screen, we need to create some elements on the DOM with javascript and append the saught after data's text content to these elements.</p>
+        
+        <p>The code will look like this if you want it displayed in an ordered list:</p>
+        <pre>
+        
+            var peopleList = document.createElement('ol');
+          docBod.appendChild(peopleList);
+
+          //loop through all pages finding people with name skywalker.
+          for (var k = 0; k < response.results.length; k++) {
+              (function(y) { 
+                 var people = document.createElement('li');
+                 people.textContent = response.results[y].name;
+                 peopleList.appendChild(people);
+              })(k);
+             }
+
+            } else {
+              console.log('Error in network request: ' + req.statusText);
+            }
+          });
+         req.send(null);
+         event.preventDefault();
+    
+        }
+        </pre>
+        
+        <p> The loop, takes the search query string, and loops through all character pages. In this case, it returns all people with the name "skywalker" in the name attribute. With each positive match found, it creates a new list item called people. Assigns the result of the search to the text content of that list item. Appends the list item 'people' to the previously created ordered list “peopleList” and then repeats this process until there are no more matching results.</p>
+        <p>Functioning Example:</p>
+        <p data-height="265" data-theme-id="light" data-slug-hash="dvoYOd" data-default-tab="result" data-user="ebridgef" data-embed-version="2" data-pen-title="dvoYOd" class="codepen">See the Pen <a href="https://codepen.io/ebridgef/pen/dvoYOd/">dvoYOd</a> by Erik (<a href="http://codepen.io/ebridgef">@ebridgef</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+        
+        
+        <p class="lastline">Lets go deeper by displaying more information</p>
+    </div>
+    
+         <p class ="buttons"><a class="button" href="searching.html" role="button">BACK</a>
+         <a class="button" href="diving-deeper.html" role="button">NEXT</a></p>
+    
+</body>
+    

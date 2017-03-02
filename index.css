@@ -1,0 +1,22 @@
+
+ .page{
+ 	background: url("https://bridgefe.github.io/How-to/images/stars.jpg");
+ }
+ .title{
+	width: 50%;
+     text-align: center;
+     margin-top: 80px;
+	margin-left: auto;
+	margin-right: auto;
+}
+p.trooper{
+    text-align: center;
+    margin-top: 100px
+}
+    img.trooperhead{
+         max-height: 100px;  
+}
+img.trooperhead:hover{
+    background-color:yellow;
+    
+}

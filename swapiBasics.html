@@ -1,0 +1,93 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="swapiBasics.css">
+</head>
+<body>
+    <div class="title"><img src="trooperheadblack.png">
+        <h1>
+        API Call and Response.
+        </h1>
+        <h4><ul>
+            <li>Introduce SWAPI</li>
+            <li>Making a basic call</li>
+            </ul>
+        </h4>
+    </div>
+    
+    <div class="text">
+        
+        <h2>SWAPI</h2>
+        <P>Unlike many APIs, SWAPI does not require and API key. SWAPI is open and free to use by anyone.</P>
+        <P>The SWAPI contains large amounts of data organized into six main categories:</P>
+        <ul>
+            <li>People: 87</li>
+            <li>Films: 7</li>
+            <li>Starships: 37</li>
+            <li>Vehicles: 39</li>
+            <li>Species: 37</li>
+            <li>Planets: 61</li>
+        </ul>
+        <p>Within each of these areas, there are more specified attributes to access with different ways to access them.
+        <br>For out purposes, we will start by focusing on People, and build from there. </p>
+        
+        <h2>A Basic Call</h2>
+        <p>Like most APIs we need a base URL to make a call.
+            <br>The base URL for the SWAPI is:<code> http http://swapi.co/api/</code></p>
+        <p>By entering the category we wish to explore into the base URL we will make our first call.
+        <br>For our purposes, lets enter people as follows:
+        <br> <code>http http://swapi.co/api/people/</code></p>
+        
+        <p>By logging the response to the console, we see the following in Javasript Object Notation, Or JSON.</p>
+        <pre>
+        
+            {
+        "count": 87,
+        "next": "http://swapi.co/api/people/?page=2",
+        "previous": null,
+        "results": [
+                {
+                        "name": "Luke Skywalker",
+                        "height": "172",
+                        "mass": "77",
+                        "hair_color": "blond",
+                        "skin_color": "fair",
+                        "eye_color": "blue",
+                        "birth_year": "19BBY",
+                        "gender": "male",
+                        "homeworld": "http://swapi.co/api/planets/1/",
+                        "films": [
+                                "http://swapi.co/api/films/6/",
+                                "http://swapi.co/api/films/3/",
+                                "http://swapi.co/api/films/2/",
+                                "http://swapi.co/api/films/1/",
+                                "http://swapi.co/api/films/7/"
+                        ],
+                        "species": [
+                                "http://swapi.co/api/species/1/"
+                        ],
+                        "vehicles": [
+                                "http://swapi.co/api/vehicles/14/",
+                                "http://swapi.co/api/vehicles/30/"
+                        ],
+                        "starships": [
+                                "http://swapi.co/api/starships/12/",
+                                "http://swapi.co/api/starships/22/"
+                        ],
+                        "created": "2014-12-09T13:50:51.644000Z",
+                        "edited": "2014-12-20T21:17:56.891000Z",
+                        "url": "http://swapi.co/api/people/1/"
+                },
+        </pre>
+        <p>This JSON response shows us that there are 87 people in the API. It also shows us the URL of the current person, along with their basic attributes. Notice below the character attributes, there are arrays being returned titled “films”, “species”, “vehicles”, and “starships”. <br>We want to explore these! </p>
+        <p class="lastline">Lets build some Javascript that makes a call to the SWAPI</p>
+    </div>
+    
+         <p class ="buttons"><a class="button" href="intro.html" role="button">BACK</a>
+         <a class="button" href="requestFormat.html" role="button">NEXT</a></p>
+    
+</body>
+    
+</html>

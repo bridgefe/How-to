@@ -1,0 +1,63 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="swapiBasics.css">
+</head>
+<body>
+    <div class="title"><img src="trooperheadblack.png">
+        <h1>
+        Search query string
+        </h1>
+        <h4><ul>
+            <li>For loops</li>
+            <li>Returning specific attributes</li>
+            </ul>
+        </h4>
+        
+        
+    </div>
+    
+    <div class="text">
+        <h2>Query string</h2>
+        <p>SWAPI supports the use of a query string
+        <br>For our purposes we will enter "skywalker" to be searched for within the people category. This will search for anyone with that name in the database.</p>
+        <p>This will now be the structure of our base URL:</p>
+        <code>https://swapi.co/api/people/?search=skywalker</code>
+        <p>Now our request will look like this:</p>
+        <pre>
+        
+      var req = new XMLHttpRequest();
+      var URLhost = 'https://swapi.co/api/people/?search=skywalker';
+      req.open('GET', URLhost, true);
+      req.addEventListener('load', function() {
+        if (req.status >= 200 && req.status < 400) {
+          var response = JSON.parse(req.responseText);
+            .
+            .
+            .
+        </pre>
+        <h2>For loop to search</h2>
+        <p>To find what we want, we can use a for loop to
+        loop through all people pages, while seeking the name attribute. This will find all people with skywalker in the name attribute and make them into a list. Dont forget closure!</p>
+        <p>The code for the for loop will be similar to this:</p>
+        <pre>
+        
+        for (var k = 0; k < response.results.length; k++) {
+            (function(y) { 
+              var people = document.createElement('li');
+              people.textContent = response.results[y].name;
+              peopleList.appendChild(people);
+            })(k);
+          }
+        </pre>
+        
+        <p class="lastline">Now lets see this in action.</p>
+    </div>
+    
+         <p class ="buttons"><a class="button" href="request-format.html" role="button">BACK</a>
+         <a class="button" href="display-data.html" role="button">NEXT</a></p>
+    
+</body>
+    

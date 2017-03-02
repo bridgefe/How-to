@@ -1,0 +1,57 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="swapiBasics.css">
+</head>
+<body>
+    <div class="title"><img src="trooperheadblack.png">
+        <h1>
+        JS Call to the SWAPI
+        </h1>
+        <h4><ul>
+            <li>Standard API call format</li>
+            <li>How to structure javascript API calls</li>
+            </ul>
+        </h4>
+    </div>
+    
+    <div class="text">
+        <h2>All API calls</h2>
+        <p>Should start with the same information
+        <br>A new request  and the URL host:</p>
+        <pre>
+        
+       var req = new XMLHttpRequest();
+       var URLhost = 'https://swapi.co/api/people/'
+        </pre>
+        <p>req stands for the type of new request we are making, and the URLhost represents what page of the SWAPI we are accessing.
+        <br>In our case the URL host is pointing to the "people" category of the SWAPI.</p>
+        <h2>Open the request</h2>
+        <p>After stating the type of request, we need to open the request like so:</p>
+        <pre>
+        
+        req.open('GET', URLhost, true);
+        req.addEventListener('load',function(){
+            if(req.status >= 200 && req.status < 400){
+                var response = JSON.parse(req.responseText);
+                console.log(response);
+            } else {
+                console.log('Error in network request: ' + req.statusText);
+            }});
+        req.send(null);
+        event.preventDefault();
+        </pre>
+        <p>The request is opened, and the event listener waits for it to be loaded. If the request is successful the parsed response text from our call is loaded into our variable. If the request is unsuccessful, an error message will be displayed to the console.</p>
+        <p>At this point we are still relying on the console to view the response data to our requests. This is inconvenient at best. Additionally we are only listing people from the films.
+        We don't want to just list people, we want to search for people!</p>
+        
+        
+        <p class="lastline">Luckily the folks at SWAPI made the base URL capable of taking query strings.</p>
+    </div>
+    
+         <p class ="buttons"><a class="button" href="swapiBasics.html" role="button">BACK</a>
+         <a class="button" href="searching.html" role="button">NEXT</a></p>
+    
+</body>

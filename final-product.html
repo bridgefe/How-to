@@ -1,0 +1,134 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="swapiBasics.css">
+</head>
+<body>
+    <div class="title"><img src="trooperheadblack.png">
+        <h1>
+        Finishing touches
+        </h1>
+        <h4><ul>
+            <li>Adding user interactivity</li>
+            <li>Adding more search details</li>
+            </ul>
+        </h4>
+    </div>
+   
+    <div class="text">
+        <p>After the last section, you probably realized that in order to make calls to access other arrays in our people objects, you simply needed more for loops. For our final touches, we will display the homeworld and film appearances of our searched for characters. As well as making the page user interactive with the addition of a button and search bar.</p>
+        
+        <h2>More search details</h2>
+        <p>To add the home world of our characters to our results page, we need another if statement to access the information in our character's home world attribute. Note that we do not need a loop because it is not an array. It only references a single planets page. The if statement takes the data in the homeworld attribute and makes a call to the corresponding planet page.</p>
+        <p>The implimentation is as follows. Be careful of where you place this. It may not be as complicated as a loop, but it can be tricky and introduce bugs into your code.</p>
+        
+        <pre>
+        
+         if (response.results[y].homeworld.length > 0) {
+                var homeworldHeader = document.createElement('h6');
+                homeworldHeader.textContent = 'homeworld:';
+                peopleList.appendChild(homeworldHeader)
+                var homeworldList = document.createElement('ol');
+                homeworldHeader.appendChild(homeworldList);
+               
+                    var newURLhost = response.results[y].homeworld;
+                    var newReq = new XMLHttpRequest();
+                    newReq.open('GET', newURLhost, true);
+                    newReq.addEventListener('load', function(){
+                    if(newReq.status >= 200 && newReq.status < 400){
+                      var newResponse = JSON.parse(newReq.responseText);
+                      var homeworld = document.createElement('li');
+                      homeworld.textContent = newResponse.name;
+                      homeworldList.appendChild(homeworld);
+                    } else {
+                      console.log("Error in network request: " + newReq.statusText);
+                    }});
+                    newReq.send(null);
+                    event.preventDefault();}
+        </pre>
+        
+        <h2>Adding the last loops</h2>
+        <p>Make some slight changes to our previous for loop that searched for our characters starships. It should now loop through the films array within our character objects and make calls to the corresponding film pages. Get the film titles and append them to the film list. This loop should be placed just below where the previous loop closed.</p>
+        
+    <p>Like so:</p>
+        <pre>
+        .
+        .
+        })(e);
+		}
+		}
+              if (response.results[y].films.length > 0) {
+                var filmHeader = document.createElement('h6');
+                filmHeader.textContent = 'films:';
+                peopleList.appendChild(filmHeader)
+                var filmList = document.createElement('ol');
+                filmHeader.appendChild(filmList);
+                //loop through starship array make new request for each starship
+                for (var e = 0; e < response.results[y].films.length; e++) {
+                  (function(x) {
+                    var newURLhost = response.results[y].films[x];
+                    var newReq = new XMLHttpRequest();
+                    newReq.open('GET', newURLhost, true);
+                    newReq.addEventListener('load', function(){
+                    if(newReq.status >= 200 && newReq.status < 400){
+                      var newResponse = JSON.parse(newReq.responseText);
+                      var film = document.createElement('li');
+                      film.textContent = newResponse.title;
+                      filmList.appendChild(film);
+                    } else {
+                      console.log("Error in network request: " + newReq.statusText);
+                    }});
+                    newReq.send(null);
+                    event.preventDefault();
+                  })(e);
+                }
+              }
+              .
+              .
+              </pre>
+              <p>If you want to add more information to be displyed in your search results, simply add more loops with different parameters! This way you can access any star wars data you desire!</p>
+              
+              <h2>Accepting user input</h2>
+              <p>lastly we will add our user interactivity. This is done by making some small changes to the start of our code.  Our event listener  is now bindButton instead of loadPeople. This is because we are binding the calls we make to the API to our button. Next we get the button element 'submit' by id and attach an event listener to it that waits for it to be clicked. Also notice that the baseURL now has a variable in it. The value of this variable called 'payload' will be determined by user text input in our finished product.</p>
+              <p>Payload will be our search query.</p>
+              <p>The new if statement simply checks to see if a user has input anything.
+              <br>If there is user input into the text box, it becomes the query string. If there is no input, no calls are made.</p>
+              
+              <pre>
+              
+               document.addEventListener('DOMContentLoaded', bindButton);
+
+               function bindButton() {
+                 document.getElementById('submit').addEventListener('click', function(event){
+                 var docBod = document.body;
+      
+                 var payload;
+                 var name = document.getElementById("name").value;
+                 if(name){
+                    payload = '?search='+name;
+                 }
+
+                 var req = new XMLHttpRequest();
+                 var URLhost = 'https://swapi.co/api/people/'+payload;
+                 .
+                 .
+              </pre>
+              <h2>Piece it together</h2>
+              <p>When we finally put everything together, we get a functioning search engine for the Star Wars API.</p>
+              <p>Try it out:</p>
+              <p data-height="265" data-theme-id="light" data-slug-hash="PpoRmM" data-default-tab="js,result" data-user="ebridgef" data-embed-version="2" data-pen-title="ApiSearch" class="codepen">See the Pen <a href="http://codepen.io/ebridgef/pen/PpoRmM/">ApiSearch</a> by Erik (<a href="http://codepen.io/ebridgef">@ebridgef</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+              <script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>   
+              
+              <p>This example correlates the user input to character names, but the possibilities are endless if you utilize the techniques from this tutorial.
+            </p>
+        
+        <p class="lastline">Enjoy exploring the Star Wars film Universe!</p>
+    </div>
+    
+         <p class ="buttons"><a class="button" href="howtoHome.html" role="button">HOME</a></p>
+    
+</body>
+    
+</html>
